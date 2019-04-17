@@ -6,7 +6,51 @@
 </head>
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
+
 <script>
+  const canvas = document.querySelector('#draw'); // grabs canvas
+  const ctx = canvas.getContext('2d'); //draw on context not on canvas itself context can be 2d or 3d for video games or 3d rendering
+
+  //resize canvas
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.strokeStyle = '#BADA55'; //color
+  ctx.lineJoin = 'round'; //end of line sqaured or rounded?
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 50;
+
+
+  let isDrawing = false; //
+  let lastX = 0;
+  let lastY = 0;
+  let hue = 0; //color start which is red
+  let direction = true;
+
+  function draw(e) {
+    if(!isDrawing) return; //stops the function when they are not mouse down
+
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)` //stroke style started as badass(green) hue is the variable hue
+
+    console.log(e);
+    ctx.beginPath(); //starts a path
+    ctx.moveTo(lastX, lastY); //starts XY usuallly always starts at 0,0
+    ctx. lineTo(e.offsetX, e.offsetY); //go to a XY
+    ctx.stroke();
+
+    //to update XY variables
+    [lastX, lastY ] = [e.offsetX, e.offsetY];
+    //to change hue with every stroke increments it, if it goes over 360 then resets back to red
+    hue++;
+  }
+
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing= true;
+    [lastX, lastY ] = [e.offsetX, e.offsetY];
+  }); //stops the first line being drawn from 0,0 to point of mouse
+
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', () => isDrawing= false);
+  canvas.addEventListener('mouseout', () => isDrawing= false);
 </script>
 
 <style>
