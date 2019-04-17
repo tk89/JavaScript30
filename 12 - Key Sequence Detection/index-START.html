@@ -7,6 +7,17 @@
 </head>
 <body>
 <script>
+  const pressed =[];
+  const secretCode = 'tas'
+  window.addEventListener('keyup', (e) => {
+    console.log(e.key); //name of key user pressed
+    pressed.push(e.key); //pushes key into array
+    pressed.splice(-secretCode.length -1, pressed.length - secretCode.length); //trims array to max needed
+    if(pressed.join('').includes(secretCode)) {
+      cornify_add();//cornify adds random unicorns to page
+    }
+    console.log(pressed);
+  })
 </script>
 </body>
 </html>
